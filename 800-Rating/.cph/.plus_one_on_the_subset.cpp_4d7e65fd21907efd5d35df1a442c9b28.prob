@@ -1,0 +1,1 @@
+{"name":"Local: plus_one_on_the_subset","url":"c:\\codeforces\\800-Rating\\plus_one_on_the_subset.cpp","tests":[{"id":1694454039226,"input":"3\n6\n3 4 2 4 1 2\n3\n1000 1002 998\n2\n12 11\n","output":"3\n4\n1\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\codeforces\\800-Rating\\plus_one_on_the_subset.cpp","group":"local","local":true}

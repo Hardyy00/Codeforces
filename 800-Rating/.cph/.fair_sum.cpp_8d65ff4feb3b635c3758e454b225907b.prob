@@ -1,0 +1,1 @@
+{"name":"Local: fair_sum","url":"c:\\codeforces\\800-Rating\\fair_sum.cpp","tests":[{"id":1694748439009,"input":"5\n2\n1 1\n2\n1 2\n4\n1 2 1 2\n3\n2 2 2\n3\n2 1 2","output":"YES\nNO\nYES\nNO\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\codeforces\\800-Rating\\fair_sum.cpp","group":"local","local":true}

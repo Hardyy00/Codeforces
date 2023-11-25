@@ -1,0 +1,1 @@
+{"name":"Local: subsequence_permutations","url":"c:\\codeforces\\800-Rating\\subsequence_permutations.cpp","tests":[{"id":1694453178091,"input":"4\n3\nlol\n10\ncodeforces\n5\naaaaa\n4\ndcba\n","output":"2\n6\n0\n4\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\codeforces\\800-Rating\\subsequence_permutations.cpp","group":"local","local":true}

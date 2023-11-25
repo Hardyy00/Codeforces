@@ -1,0 +1,1 @@
+{"name":"Local: infinity_table","url":"c:\\codeforces\\800-Rating\\infinity_table.cpp","tests":[{"id":1695014913849,"input":"7\n11\n14\n5\n4\n1\n2\n1000000000\n","output":"2 4\n4 3\n1 3\n2 1\n1 1\n1 2\n31623 14130\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\codeforces\\800-Rating\\infinity_table.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: domino_disaster","url":"c:\\codeforces\\800-Rating\\domino_disaster.cpp","tests":[{"id":1698306575529,"input":"4\n1\nU\n2\nLR\n5\nLRDLR\n6\nUUUUUU","output":"D\nLR\nLRULR\nDDDDDD"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\codeforces\\800-Rating\\domino_disaster.cpp","group":"local","local":true}

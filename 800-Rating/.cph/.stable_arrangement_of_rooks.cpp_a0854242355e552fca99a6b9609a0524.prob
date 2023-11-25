@@ -1,0 +1,1 @@
+{"name":"Local: stable_arrangement_of_rooks","url":"c:\\codeforces\\800-Rating\\stable_arrangement_of_rooks.cpp","tests":[{"id":1695111516217,"input":"5\n3 2\n3 3\n1 1\n5 2\n40 33","output":"-1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\codeforces\\800-Rating\\stable_arrangement_of_rooks.cpp","group":"local","local":true}

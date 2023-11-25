@@ -1,0 +1,1 @@
+{"name":"Local: equidistant_letters","url":"c:\\codeforces\\800-Rating\\equidistant_letters.cpp","tests":[{"id":1694714524528,"input":"3\noelhl\nabcdcba\nac\n","output":"hello\nababcdc\nac\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\codeforces\\800-Rating\\equidistant_letters.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: wonderful_coloring","url":"c:\\codeforces\\800-Rating\\wonderful_coloring.cpp","tests":[{"id":1694237292866,"input":"5\nkzaaa\ncodeforces\narchive\ny\nxxxxxx\n","output":"2\n5\n3\n0\n1\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\codeforces\\800-Rating\\wonderful_coloring.cpp","group":"local","local":true}
