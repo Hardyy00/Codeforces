@@ -16,10 +16,6 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
-typedef vector<vector<long long>> vvll;
-typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -28,8 +24,6 @@ typedef map<long long, long long> mll;
 typedef unordered_map<long long, long long> umll;
 typedef set<long long> sll;
 typedef set<int> si;
-typedef unordered_set<int> usi;
-typedef unordered_set<long long> usll;
 typedef stack<int> sti;
 typedef stack<long long> stll;
 typedef vector<pair<int, int>> vpii;
@@ -38,26 +32,6 @@ typedef priority_queue<int> pqi;
 typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
-
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
 
 
 void solve() {

@@ -16,10 +16,6 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
-typedef vector<vector<long long>> vvll;
-typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -28,8 +24,6 @@ typedef map<long long, long long> mll;
 typedef unordered_map<long long, long long> umll;
 typedef set<long long> sll;
 typedef set<int> si;
-typedef unordered_set<int> usi;
-typedef unordered_set<long long> usll;
 typedef stack<int> sti;
 typedef stack<long long> stll;
 typedef vector<pair<int, int>> vpii;
@@ -39,30 +33,41 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
 
+	int n;
+	cin >> n;
+	vl a(n);
 
+	vl b(n);
+
+	ll m1 = LLONG_MAX;
+	ll m2 = LLONG_MAX;
+
+	REP(i, 0, n - 1) {
+		cin >> a[i];
+		m1 = min(m1, a[i]);
+	}
+
+	REP(i, 0, n - 1) {
+		cin >> b[i];
+		m2 = min(m2, b[i]);
+	}
+
+	ll s1 = 0;
+	ll s2 = 0;
+
+	fauto(i, a) {
+		s1 += (m2 + i);
+
+	}
+
+	fauto(i, b) {
+		s2 += (m1 + i);
+	}
+
+	cout << min(s1, s2) << endl;
 }
 
 int main() {

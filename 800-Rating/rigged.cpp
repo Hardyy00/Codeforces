@@ -16,10 +16,6 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
-typedef vector<vector<long long>> vvll;
-typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -28,8 +24,6 @@ typedef map<long long, long long> mll;
 typedef unordered_map<long long, long long> umll;
 typedef set<long long> sll;
 typedef set<int> si;
-typedef unordered_set<int> usi;
-typedef unordered_set<long long> usll;
 typedef stack<int> sti;
 typedef stack<long long> stll;
 typedef vector<pair<int, int>> vpii;
@@ -39,30 +33,46 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
 
+	int n;
+	cin >> n;
+	vpll v(n);
 
+	REP(i, 0, n - 1) {
+		ll a, b;
+
+		cin >> a >> b;
+
+		v[i] = MP(a, b);
+	}
+
+	ll s = v[0].F;
+	ll e = v[0].S;
+
+	bool same = false;
+	bool f = true;
+
+	REP(i, 1, n - 1) {
+
+		if (v[i].F == s && v[i].S == e) {
+			same = true;
+			break;
+		}
+
+		if (v[i].F >= s && v[i].S >= e) {
+			f = false;
+			break;
+		}
+	}
+
+	if (!f || same) {
+		cout << -1 << endl;
+		return;
+	}
+
+	cout << s << endl;
 }
 
 int main() {

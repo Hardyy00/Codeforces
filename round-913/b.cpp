@@ -16,10 +16,6 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
-typedef vector<vector<long long>> vvll;
-typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -28,8 +24,6 @@ typedef map<long long, long long> mll;
 typedef unordered_map<long long, long long> umll;
 typedef set<long long> sll;
 typedef set<int> si;
-typedef unordered_set<int> usi;
-typedef unordered_set<long long> usll;
 typedef stack<int> sti;
 typedef stack<long long> stll;
 typedef vector<pair<int, int>> vpii;
@@ -39,29 +33,43 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
 
+
+	string s;
+	cin >> s;
+
+	int l = 0;
+	int c = 0;
+
+	string ans = "";
+	int n = s.size();
+
+
+
+
+	REPD(i, n - 1, 0) {
+
+		if (s[i] == 'b') l++;
+		else if (s[i] == 'B')c++;
+		else if (islower(s[i])) {
+
+			if (l) {
+				l--;
+			} else {
+				ans = s[i] + ans;
+			}
+		} else if (isupper(s[i])) {
+			if (c) {
+				c--;
+			} else {
+				ans = s[i] + ans;
+			}
+		}
+	}
+
+	cout << ans << endl;
 
 }
 

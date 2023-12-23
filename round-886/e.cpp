@@ -13,13 +13,12 @@ using namespace std;
 
 
 typedef long long ll;
+typedef long long int lli;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
 typedef vector<vector<long long>> vvll;
 typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -39,29 +38,46 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
 
+	int n;
+	cin >> n;
+	lli s;
+	cin >> s;
+
+	vl v(n);
+
+	REP(i, 0, n - 1) cin >> v[i];
+
+	lli low = 1;
+	lli high = 1e9;
+
+	while (low <= high) {
+
+		lli mid = (low + high) >> 1;
+
+		int f = 0;
+
+		lli sum = 0;
+		fauto(i, v) {
+
+			sum += (i + 2 * mid) * (i + 2 * mid);
+
+			if (sum > s) {
+				break;
+			}
+		}
+
+		if (sum > s) high = mid - 1;
+		else if (sum < s) low = mid + 1;
+		else {
+			cout << mid << endl;
+			return;
+		}
+	}
+
+	cout << -1 << endl;
 
 }
 
@@ -83,7 +99,4 @@ int main() {
 
 		solve();
 	}
-
-
-
 }

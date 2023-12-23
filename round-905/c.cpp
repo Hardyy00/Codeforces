@@ -39,28 +39,66 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
+
+	int n, k;
+	cin >> n >> k;
+
+	vi v(11);
+
+	int even = 0;
+	int odd = 0;
+
+	REP(i, 0, n - 1) {
+		int c;
+		cin >> c;
+		v[c]++;
+	}
+
+	int mini = INT_MAX;
+
+
+	REP(i, 1, 10) {
+
+		if (v[i] > 0) {
+
+			if ((i & 1) == 1) odd += v[i];
+			else even += v[i];
+
+			int f = i / k;
+
+			if ((i % k) != 0) f++;
+
+			mini = min(mini , (f * k) - i);
+
+			// cout << i << " " << mini << " " << f << endl;
+
+		}
+	}
+
+	if (k == 2) {
+		if (even > 0) {
+			cout << 0 << endl;
+		} else {
+			cout << 1 << endl;
+		}
+	} else if (k == 4) {
+		// cout << even << " " << odd << endl;
+		if (even > 1) {
+			cout << 0 << endl;
+		} else if (v[4] != 0 || v[8] != 0) {
+			cout << 0 << endl;
+		} else {
+			if (even == 1) cout << 1 << endl;
+			else {
+				cout << min(mini, 2) << endl;
+			}
+		}
+	} else {
+		cout << mini << endl;
+	}
+
 
 
 }

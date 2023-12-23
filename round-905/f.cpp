@@ -39,30 +39,55 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
 
 
+	si set;
+
+	int n;
+	cin >> n;
+
+	vi f(n);
+	vi l(n);
+
+	vi v(n);
+
+	REP(i, 0, n - 1) cin >> v[i];
+
+	REP(i, 0, n - 1) {
+
+		if (!set.count(v[i])) {
+			f[i] = 1;
+		}
+
+		set.insert(v[i]);
+	}
+
+	set.clear();
+
+	REPD(i, n - 1, 0) {
+
+		if (!set.count(v[i])) {
+			l[i] = 1;
+		}
+
+		set.insert(v[i]);
+	}
+
+	ll ans = 0;
+	int cn = 0;
+
+	REP(i, 0, n - 1) {
+
+		cn += f[i];
+
+		if (l[i]) {
+			ans += cn;
+		}
+	}
+
+	cout << ans << endl;
 }
 
 int main() {

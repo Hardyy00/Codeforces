@@ -16,10 +16,6 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
-typedef vector<vector<long long>> vvll;
-typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -28,8 +24,6 @@ typedef map<long long, long long> mll;
 typedef unordered_map<long long, long long> umll;
 typedef set<long long> sll;
 typedef set<int> si;
-typedef unordered_set<int> usi;
-typedef unordered_set<long long> usll;
 typedef stack<int> sti;
 typedef stack<long long> stll;
 typedef vector<pair<int, int>> vpii;
@@ -39,28 +33,53 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
+
+	int n;
+	cin >> n;
+
+	vl v(n);
+	vl suff(n);
+
+	ll sum = 0;
+	bool all = true;
+
+	REP(i, 0, n - 1) {
+		cin >> v[i];
+		if (v[i] >  0) all = false;
+
+		sum += v[i];
+	}
+
+	if (all) {
+
+		cout << sum << endl;
+		return;
+	}
+
+	suff[n - 1] = v[n - 1];
+
+	REPD(i, n - 2, 0) {
+
+		suff[i] = v[i] + suff[i + 1];
+
+	}
+
+
+
+	int k = 0;
+	ll acc = 0;
+
+	REP(i, 0, n - 1) {
+
+		if (suff[i] >= 0) k++;
+
+		acc += v[i] * k;
+
+	}
+
+	cout << acc << endl;
 
 
 }

@@ -16,10 +16,8 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
 typedef vector<vector<long long>> vvll;
 typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -39,30 +37,34 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
 
+	vector<vector<char>> v(8, vector<char>(8));
 
+	int a = -1, b = -1;
+	REP(i, 0, 7) {
+		string s;
+		cin >> s;
+
+		REP(j, 0, 7) {
+			v[i][j] = s[j];
+
+			if (a == -1 && s[j] != '.') {
+				a = i;
+				b = j;
+			}
+		}
+	}
+
+	string s = "";
+
+	while (a < 8 && v[a][b] != '.') {
+		s += v[a][b];
+		a++;
+	}
+
+	cout << s << endl;
 }
 
 int main() {

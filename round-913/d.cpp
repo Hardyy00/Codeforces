@@ -16,10 +16,6 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
-typedef vector<vector<long long>> vvll;
-typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -28,8 +24,6 @@ typedef map<long long, long long> mll;
 typedef unordered_map<long long, long long> umll;
 typedef set<long long> sll;
 typedef set<int> si;
-typedef unordered_set<int> usi;
-typedef unordered_set<long long> usll;
 typedef stack<int> sti;
 typedef stack<long long> stll;
 typedef vector<pair<int, int>> vpii;
@@ -39,30 +33,74 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
+bool p(ll mid, vector<vector<long long>>  &v, int n) {
 
-	cout << "{ ";
-	fauto(i, map) {
+	ll l = 0;
+	ll r = 0 ;
 
-		cout << "{ " << i.F << " : " << i.S << " }, ";
+	fauto(p, v) {
+
+		ll a = max(0LL, l - mid);
+		ll b = r + mid;
+
+		l = max(a, p[0]);
+		r = min(b, p[1]);
+
+
+		if (!(l >= p[0] && l <= p[1] && r >= p[0] && r <= p[1])) {
+
+			return false;
+		}
 	}
 
-	cout << " }" << endl;
+	return true;
+
+
 }
 
-void print_vector(vi &v) {
 
-	cout << "{ ";
+ll bs(vector<vector<long long>>  &v, int n) {
 
-	fauto(i, v) cout << i << ", ";
+	ll low = 0;
+	ll high = 1e9;
+	ll ans = 0;
 
-	cout << " }" << endl;
+
+	while (low <= high) {
+
+		ll mid = (low + high) >> 1;
+
+
+		if (p(mid, v, n)) {
+
+			ans = mid;
+			high = mid - 1;
+
+		} else {
+			low = mid + 1;
+		}
+	}
+
+	return ans;
 }
-
 
 void solve() {
 
 
+	int n;
+	cin >> n;
+
+	vector<vector<long long>>  v(n, vector<long long>(2));
+
+	REP(i, 0, n - 1) {
+
+
+		cin >> v[i][0] >> v[i][1];
+
+
+	}
+
+	cout << bs(v, n) << endl;
 }
 
 int main() {

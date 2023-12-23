@@ -39,28 +39,50 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
 
-	cout << "{ ";
-	fauto(i, map) {
+void pr(map<pair<int, int>, int> &mp) {
 
-		cout << "{ " << i.F << " : " << i.S << " }, ";
+	fauto(i, mp) {
+
+		cout << "{ { " << i.F.F << " , " << i.F.S << " } , " << i.S << " } ";
 	}
-
-	cout << " }" << endl;
+	cout << endl;
 }
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
+
+	int n ;
+	cin >> n;
+
+	multiset<int, greater<int> > left;
+	multiset<int> right;
+
+	REP(i, 0, n - 1) {
+
+		char ch;
+		int l, r;
+		cin >> ch >> l >> r;
+
+		if (ch == '+') {
+			left.insert(l);
+			right.insert(r);
+		} else {
+
+			left.erase(left.find(l));
+			right.erase(right.find(r));
+		}
+
+		if (!left.empty()) {
+			int minR  = *right.begin();
+			int maxL = *left.begin();
+
+			cout << ((minR < maxL) ? "YES" : "NO") << endl;
+		} else {
+			cout << "NO" << endl;
+		}
+	}
+
+
 
 
 }
@@ -76,13 +98,10 @@ int main() {
 	cin.tie(0);
 	cout.tie(0);
 
-	int t;
-	cin >> t;
 
-	while (t--) {
 
-		solve();
-	}
+	solve();
+
 
 
 

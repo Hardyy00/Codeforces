@@ -16,10 +16,8 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
-typedef vector<char> vc;
 typedef vector<vector<long long>> vvll;
 typedef vector<vector<int>> vvi;
-typedef vector<vector<char>> vvc;
 typedef pair<int, int> pii;
 typedef pair<long long , long long> pll;
 typedef map<int, int> mii;
@@ -39,28 +37,34 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
-
-	cout << "{ ";
-	fauto(i, map) {
-
-		cout << "{ " << i.F << " : " << i.S << " }, ";
-	}
-
-	cout << " }" << endl;
-}
-
-void print_vector(vi &v) {
-
-	cout << "{ ";
-
-	fauto(i, v) cout << i << ", ";
-
-	cout << " }" << endl;
-}
-
 
 void solve() {
+
+	int n;
+	ll k;
+	cin >> n >> k;
+	vl v(n);
+
+	REP(i, 0, n - 1) cin >> v[i];
+
+	sort(all(v));
+
+	int ei = 1;
+	int si = 0;
+	int maxi = 1;
+
+	while (ei < n) {
+
+		if ((v[ei] - v[ei - 1]) > k) {
+
+			si = ei;
+		}
+
+		maxi = max(maxi, ei - si + 1);
+		ei++;
+	}
+
+	cout << n - maxi << endl;
 
 
 }
