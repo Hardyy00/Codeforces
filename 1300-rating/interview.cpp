@@ -11,6 +11,8 @@ int f(int n, vector<ll> &pre) {
 	ll high = n - 1;
 	ll ans = 0;
 
+
+
 	while (low <= high) {
 
 		ll mid = high + (low - high) / 2;
@@ -24,6 +26,7 @@ int f(int n, vector<ll> &pre) {
 		for (int i = low + 1; i <= mid + 1; i++) {
 			cout << i << " ";
 		}
+
 
 		cout << endl;
 
