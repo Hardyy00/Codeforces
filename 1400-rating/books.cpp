@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,12 +10,9 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
-typedef long long int lli;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
@@ -65,20 +59,36 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
 
+	int n;
+	ll t;
+	cin >> n >> t;
 
+	vl v(n);
+
+	REP(i, 0, n - 1) cin >> v[i];
+
+	int si = 0;
+	int ei = 0;
+	int maxi = 0;
+	ll sum = 0;
+
+
+	while (ei < n) {
+
+		sum += v[ei];
+
+		while (sum > t && si <= ei) {
+			sum -= v[si++];
+		}
+
+		maxi = max(maxi , ei - si + 1);
+		ei++;
+	}
+
+	cout << maxi << endl;
 }
 
 int main() {
@@ -92,13 +102,13 @@ int main() {
 	cin.tie(0);
 	cout.tie(0);
 
-	int t;
-	cin >> t;
+	// int t;
+	// cin >> t;
 
-	while (t--) {
+	// while (t--) {
 
-		solve();
-	}
+	solve();
+	// }
 
 
 

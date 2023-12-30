@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,12 +10,9 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
-typedef long long int lli;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
@@ -65,18 +59,59 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
+
+	int n;
+	ll x, y;
+	cin >> n >> x >> y;
+
+	string s1;
+	string s2;
+	cin >> s1 >> s2 ;
+
+	vi v;
+
+	REP(i, 0, n - 1) {
+		if (s1[i] != s2[i]) v.PB(i);
+	}
+
+	if ((v.size() & 1) == 1) {
+		cout << -1 << endl;
+		return;
+	}
+
+	if (v.size() == 0) {
+		cout << 0 << endl;
+		return;
+	}
+
+	if ((v.size() == s1.size())) {
+
+		if (s1.size() == 2) cout << x << endl;
+		else {
+			cout << (v.size() / 2) * 1LL * y << endl;
+		}
+
+		return;
+	}
+
+	if (v.size() == 2 ) {
+
+		if (v[0] + 1 == v[1]) {
+			if (2 * y < x) cout << 2 * 1LL * y << endl;
+			else {
+				cout << x << endl;
+			}
+		} else {
+			cout << y << endl;
+		}
+
+		return;
+	}
+
+	cout << (v.size() / 2) * 1LL * y << endl;
+
 
 
 }

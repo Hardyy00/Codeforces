@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -65,19 +60,86 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
 
-	cout << "{ " ;
+void print_vectorll(vl &v) {
 
-	fauto(i, s) cout << i << ", ";
+	cout << "{ ";
 
-	cout << " } " << endl;
+	fauto(i, v) cout << i << ", ";
+
+	cout << " }" << endl;
 }
-
 
 
 void solve() {
 
+	int n;
+	cin >> n;
+	vl a(n);
+	vl b(n);
+
+	REP(i, 0, n - 1) {
+
+		int v;
+		cin >> v;
+
+		if ((i & 1) == 1) {
+			a[i] = -v;
+			b[i] = v;
+		} else {
+			a[i] = v;
+			b[i] = -v;
+		}
+	}
+
+	if (n == 1) {
+		cout << "NO" << endl;
+		return;
+	}
+
+	vl p1(n);
+	vl p2(n);
+
+	p1[0] = a[0];
+
+	p2[0] = b[0];
+
+	REP(i, 1, n - 1) {
+
+		p1[i] = p1[i - 1] + a[i];
+		p2[i] = p2[i - 1] + b[i];
+	}
+
+	// print_vectorll(p1);
+	// print_vectorll(p2);
+
+
+	sll s1;
+	sll s2;
+
+	bool f = false;
+
+	REP(i, 0, n - 1) {
+
+		if (p1[i] == 0 || p2[i] == 0) {
+
+			cout << "YES" << endl;
+			return;
+		}
+
+		if (s1.count(p1[i])) {
+			f = true;
+			break;
+		} else s1.insert(p1[i]);
+
+
+		if (s2.count(p2[i])) {
+			f = true;
+			break;
+		} else s2.insert(p2[i]);
+	}
+
+	cout << (f ? "YES"  : "NO") << endl;
 
 }
 

@@ -78,6 +78,112 @@ void print_set(sll &s) {
 
 void solve() {
 
+	int n;
+	cin >> n;
+
+	string s;
+	cin >> s;
+
+	if ((n & 1) == 1) {
+		cout << -1 << endl;
+		return;
+	}
+
+	stack<pair<char, int>> st;
+
+	vi ans(n);
+
+	int f = 0;
+	REP(i, 0, n - 1) {
+
+		if (s[i] == '(') st.push(MP('(', i));
+		else {
+
+			if (st.empty()) st.push(MP(')', i));
+			else if (st.top().F == '(') {
+				f = 1;
+				ans[st.top().S] = ans[i] = 1;
+				st.pop();
+			} else {
+				st.push(MP(')', i));
+			}
+		}
+	}
+
+	// print_vector(ans);
+	int l = f;
+
+	vector<pair<char, int>> v;
+
+	while (!st.empty()) {
+		v.PB(st.top());
+		st.pop();
+	}
+
+
+	int len = v.size();
+	f = 0;
+	REP(i, 0, len - 1) {
+
+		if (v[i].F == '(') {
+			st.push(v[i]);
+		} else {
+
+			if (st.empty()) {
+				cout << -1 << endl;
+				return;
+			} else if (st.top().F == '(') {
+				f = 1;
+				ans[st.top().S] = ans[v[i].S] = l + 1;
+				st.pop();
+			} else {
+				cout << -1 << endl;
+				return;
+			}
+		}
+	}
+
+	if (!st.empty()) {
+		cout << -1 << endl;
+		return;
+	}
+
+	l += f;
+
+	int t = l;
+
+	reverse(all(s));
+	vi a2(n);
+	f = 0;
+	REP(i, 0, n - 1) {
+
+		if (s[i] == '(') st.push(MP('(', i));
+		else {
+
+			if (st.empty()) st.push(MP(')', i));
+			else if (st.top().F == '(') {
+				f = 1;
+				a2[st.top().S] = a2[i] = 1;
+				st.pop();
+			} else {
+				st.push(MP(')', i));
+			}
+		}
+	}
+
+	if (st.empty()) {
+		cout << 1 << endl;
+		fauto(i, a2) cout << i << " ";
+		cout << endl;
+	} else {
+
+		cout << t << endl;
+		fauto(i, ans) cout << i << " ";
+		cout << endl;
+	}
+
+
+
 
 }
 

@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -45,6 +40,8 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
+int N = 2e4 + 1;
+
 void print_map(mii &map) {
 
 	cout << "{ ";
@@ -65,19 +62,40 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
 
+	int n, m;
+	cin >> n >> m;
+
+	vi dis(N, 1e9);
+
+	dis[n] = 0;
+
+	queue<int> q;
+	q.push(n);
+
+	while (!q.empty()) {
+
+		int v = q.front();
+		q.pop();
+
+
+		int r1 = v * 2;
+		int r2 = v - 1;
+
+		if (r1 > 0 && r1 < N && dis[v] + 1 < dis[r1]) {
+			dis[r1] = dis[v] + 1;
+			q.push(r1);
+		}
+
+		if (r2 > 0 && r2 < N && dis[v] + 1 < dis[r2]) {
+			dis[r2] = dis[v] + 1;
+			q.push(r2);
+		}
+	}
+
+	cout << dis[m] << endl;
 
 }
 
@@ -92,13 +110,13 @@ int main() {
 	cin.tie(0);
 	cout.tie(0);
 
-	int t;
-	cin >> t;
+	// int t;
+	// cin >> t;
 
-	while (t--) {
+	// while (t--) {
 
-		solve();
-	}
+	solve();
+	// }
 
 
 

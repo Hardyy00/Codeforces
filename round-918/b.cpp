@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -65,20 +60,32 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
 
+	char ch = ' ';
+	for (int i = 0; i < 3; i++) {
+		string s;
+		cin >> s;
 
+		int a = 0;
+		int b = 0;
+		int c = 0;
+
+		for (int j = 0; j < 3; j++) {
+
+			if (s[j] == 'A') a++;
+			else if (s[j] == 'B') b++;
+			else if (s[j] == 'C') c++;
+		}
+
+		if (a == 0) ch = 'A';
+		else if (b == 0) ch = 'B';
+		else if (c == 0) ch = 'C';
+
+	}
+
+	cout << ch << endl;
 }
 
 int main() {

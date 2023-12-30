@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,12 +10,9 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
-typedef long long int lli;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
@@ -65,21 +59,35 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
 
+	int n, k;
+	cin >> n >> k;
 
+	vl v(n);
+
+	REP(i, 0, n - 1) cin >> v[i];
+
+	int p = -1;
+	int cn = 0;
+	for (int i = 1; i < k + 1; i++) {
+
+		if (v[i] <= (v[i - 1] / 2)) p = i - 1;
+		else if (i == k && i - k > p) {
+			cn++;
+		}
+	}
+
+	for (int i = k + 1; i < n; ++i) {
+
+		if (v[i] <= (v[i - 1] / 2)) p = i - 1;
+		else if (i - k > p) cn++;
+	}
+
+	cout << cn << endl;
 }
+
 
 int main() {
 

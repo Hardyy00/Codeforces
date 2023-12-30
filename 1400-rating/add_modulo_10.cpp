@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,12 +10,9 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
-typedef long long int lli;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
@@ -65,20 +59,64 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
 
+	int n;
+	cin >> n;
+	si set;
 
+	REP(i, 0, n - 1) {
+
+		int val;
+		cin >> val;
+
+		if ((val & 1) == 1) val += (val % 10);
+
+		if (val % 10 ==  0) set.insert(val);
+		else set.insert(val % 20);
+	}
+
+	if (set.size() == 1) {
+		cout << "YES" << endl;
+		return;
+	}
+
+	usi s1 = {2, 4, 8, 16};
+	usi s2 = {6, 12, 14, 18};
+
+
+	bool f = true;
+
+	fauto(i, set) {
+
+		if (!s1.count(i)) {
+			f = false;
+			break;
+		}
+	}
+
+	if (f) {
+		cout << "YES" << endl;
+		return;
+	}
+
+	f = true;
+
+	fauto(i, set) {
+
+		if (!s2.count(i)) {
+			f = false;
+			break;
+		}
+	}
+
+	if (f) {
+		cout << "YES" << endl;
+		return;
+	}
+
+	cout << "NO" << endl;
 }
 
 int main() {

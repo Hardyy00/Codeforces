@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -65,19 +60,71 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
 
+	int n, q;
+	cin >> n >> q;
+
+	vi v(n + 1);
+
+	REP(i, 1, n) cin >> v[i];
+
+	vi l(n + 1);
+	vi r(n + 1);
+
+	l[1] = 1;
+
+	REP(i, 2, n) {
+
+		l[i] = v[l[i - 1]] > v[i] ? l[i - 1] : i;
+	}
+
+
+	stack<int> stack;
+
+	REPD(i, n, 1) {
+
+		while (!stack.empty() && v[stack.top()] < v[i]) {
+			stack.pop();
+		}
+
+		r[i] = stack.empty() ? i : stack.top();
+
+		stack.push(i);
+	}
+
+	// print_vector(l);
+	// print_vector(r);
+
+
+
+	REP(i, 0, q - 1) {
+
+		int in, rou;
+		cin >> in >> rou;
+
+		if (l[in] != in) {
+			cout << 0 << endl;
+			continue;
+		} else if (v[in] == n) {
+			cout << max(0, rou - max(in - 2, 0)) << endl;
+		} else {
+
+			int c = 0;
+			rou -= max(in - 2, 0);
+
+			if (rou <= 0) {
+				cout << 0 << endl;
+				continue;
+			}
+
+			int rem = r[in] - in;
+			if (in == 1) rem--;
+
+			cout << min(rem, rou) << endl;
+		}
+	}
 
 }
 

@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -65,18 +60,60 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
+
+	lli n, m;
+	cin >> n >> m;
+
+	int two = 0, five = 0;
+	lli save = n;
+	lli k = 1;
+	while (n > 0 && n % 2 == 0) {
+		two++;
+		n /= 2;
+	}
+
+	n = save;
+	while (n > 0  && n % 5 == 0) {
+		five++;
+		n /= 5;
+	}
+
+	// cout << two << " " << five << " " << k << endl;
+
+
+
+	while (k * 2 <= m && two < five) {
+		k *= 2;
+		two++;
+	}
+
+	while (k * 5 <= m && five < two) {
+		k *= 5;
+		five++;
+	}
+	// cout << two << " " << five << " " << k << endl;
+
+
+	while (k * 10 <= m) {
+
+		k *= 10;
+	}
+
+	// cout << k << endl;
+
+	n = save;
+
+	if (k == 1) {
+		cout << n * m << endl;
+		return;
+	}
+
+	int an = m / k;
+	if (an == 0) an = 1;
+	cout << n * k * an << endl;
+
 
 
 }

@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,12 +10,9 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
-typedef long long int lli;
 typedef vector<int> vi;
 typedef vector<long long> vl;
 typedef vector<bool> vb;
@@ -65,20 +59,62 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
+class Triplet {
 
-	cout << "{ " ;
+public:
+	int gcd;
+	int x;
+	int y;
+};
 
-	fauto(i, s) cout << i << ", ";
+Triplet extendedEuclidAlgo(int a, int b) {
 
-	cout << " } " << endl;
+	if (b == 0) {
+
+		Triplet ans;
+		ans.gcd = a;
+		ans.x = 1;
+		ans.y = 0;
+
+		return ans;
+	}
+
+	Triplet val = extendedEuclidAlgo(b, a % b);
+	Triplet ans;
+
+	ans.gcd = val.gcd;
+	ans.x = val.y;
+	ans.y = val.x - (a / b) * val.y;
+
+	return ans;
 }
 
+int mmInverse(int a, int m) {
+
+	Triplet ans = extendedEuclidAlgo(a, m);
+	// cout << ans.gcd << endl;
+	return ans.x < 0 ? ans.x + m : ans.x;
+}
 
 
 void solve() {
 
+	int x;
+	cin >> x;
 
+	int md = x % 111;
+
+	int a = md * mmInverse(11, 111) % 111;
+
+	int b = (x - 11 * a);
+
+	if (b >= 0 && ((x - 11 * a) % 111) == 0 ) {
+
+		cout << "YES" << endl;
+		return;
+	}
+
+	cout << "NO" << endl;
 }
 
 int main() {

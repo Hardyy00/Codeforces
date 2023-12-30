@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -78,7 +73,37 @@ void print_set(sll &s) {
 
 void solve() {
 
+	int n, m;
+	cin >> n >> m;
 
+	vvi mat(n , vi(m));
+
+	int cn = 0;
+	for (int i = 1; i < n; i += 2) {
+
+		for (int j = 0; j < m; j++) {
+
+
+			mat[i][j] = ++cn;
+		}
+	}
+
+	for (int i = 0; i < n; i += 2) {
+
+		for (int j = 0; j < m; j++) {
+
+
+			mat[i][j] = ++cn;
+		}
+	}
+
+
+	fauto(i, mat) {
+
+		fauto(j, i) cout << j << " ";
+
+		cout << endl;
+	}
 }
 
 int main() {

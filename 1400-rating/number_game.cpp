@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -65,20 +60,74 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
+int bs(vi &v, int tar, int low, int high) {
+	int ans = -1;
 
-	cout << "{ " ;
+	while (low <= high) {
 
-	fauto(i, s) cout << i << ", ";
+		int mid = (low + high ) >> 1;
 
-	cout << " } " << endl;
+		if (v[mid] <= tar) {
+			ans = mid;
+			low = mid + 1;
+		} else {
+			high = mid - 1;
+		}
+	}
+
+	return ans;
 }
+bool p(int k, vi &v) {
 
+	int i = 0;
+	int j = v.size() - 1;
+	int c = k;
+
+
+	while (i <= j && c > 0) {
+
+		int rm = bs(v, c, i, j);
+		if (rm == -1) return false;
+
+		j = rm - 1;
+		i++;
+		c--;
+
+	}
+
+	return c == 0;
+}
 
 
 void solve() {
 
+	int n;
+	cin >> n;
 
+	vi v(n);
+
+	REP(i, 0, n - 1) cin >> v[i];
+
+	sort(all(v));
+
+	int low = 0;
+	int high = n;
+	int ans = 0;
+
+	while (low <= high) {
+
+		int mid = (low + high) >> 1;
+
+		if (p(mid, v)) {
+			ans = mid;
+			low = mid + 1;
+		} else {
+			high = mid - 1;
+		}
+
+	}
+
+	cout << ans << endl;
 }
 
 int main() {

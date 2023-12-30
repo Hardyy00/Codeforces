@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -65,18 +60,74 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
+void print_vectorll(vl &v) {
 
-	cout << "{ " ;
+	cout << "{ ";
 
-	fauto(i, s) cout << i << ", ";
+	fauto(i, v) cout << i << ", ";
 
-	cout << " } " << endl;
+	cout << " }" << endl;
 }
 
+int lb(vl &v, int tar) {
 
+
+	ll low = 0;
+	ll high = v.size() - 1;
+
+	ll ans = 0;
+
+	while (low <= high) {
+
+		ll mid = (low + high) >> 1;
+
+		if (v[mid] < tar) low = mid + 1;
+		else {
+			ans = v[mid];
+			high = mid - 1;
+		}
+	}
+
+	return ans;
+}
 
 void solve() {
+
+	int n;
+	cin >> n;
+
+	vl a(n);
+	vl b(n);
+
+	REP(i, 0, n - 1) cin >> a[i];
+	REP(i, 0, n - 1) cin >> b[i];
+
+	REP(i, 0, n - 1) {
+
+		cout << lb(b, a[i]) - a[i] <<  " ";
+	}
+
+	cout << endl;
+
+	vl m(n);
+
+	m[n - 1] = b[n - 1];
+
+	REPD(i, n - 2, 0) {
+
+		if (b[i] >= a[i + 1]) m[i] = m[i + 1];
+		else m[i] = b[i];
+	}
+
+	// print_vectorll(m);
+
+	REP(i, 0, n - 1) {
+
+		cout << m[i] - a[i] << " ";
+	}
+
+	cout << endl;
+
 
 
 }

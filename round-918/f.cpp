@@ -2,8 +2,9 @@
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
+using namespace __gnu_pbds;
 using namespace std;
+
 
 #define F first
 #define S second
@@ -13,8 +14,7 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
+#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
 
 
 typedef long long ll;
@@ -74,9 +74,94 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
+// int bs(sll &s, ll val) {
+
+// 	ll low = 0;
+// 	ll high = s.size() - 1;
+// 	ll ans = -1;
+// 	while (low <= high) {
+
+// 		ll mid = (low + high) >> 1;
+
+// 		int in = *(s.begin() + mid);
+// 		if (in >= val) high = mid - 1;
+// 		else {
+// 			ans = mid;
+// 			low = mid + 1;
+// 		}
+// 	}
+
+// 	return ans + 1;
+
+
+// }
+
+struct Node
+{
+	int val, count;
+
+	Node *left, *right;
+
+	Node(int num1, int num2)
+	{
+		this->left = this->right = NULL;
+		this->count = num2;
+		this->val = num1;
+	}
+};
+
+int addNode(Node *&root, int countSmaller, int value)
+{
+
+	if (root == NULL)
+	{
+		root = new Node(value, 0);
+		return countSmaller;
+	}
+	if (root->val < value)
+	{
+		return root->count + addNode(root->right, countSmaller + 1, value);
+	}
+	else
+	{
+		root->count++;
+		return addNode(root->left, countSmaller, value);
+	}
+}
 
 
 void solve() {
+
+
+	int n;
+	cin >> n;
+
+	vpll v(n);
+
+	REP(i, 0, n - 1) {
+
+		ll a, b;
+		cin >> a >> b;
+
+		v[i] = MP(a, b);
+	}
+
+	sort(all(v));
+
+	ll sum = 0;
+
+	ordered_set set;
+
+	set.insert(v[n - 1].S);
+
+	REPD(i, n - 2, 0) {
+
+		sum += set.order_of_key(v[i].S);
+
+		set.insert(v[i].S);
+	}
+
+	cout  << sum << endl;
 
 
 }

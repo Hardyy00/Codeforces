@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +10,6 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
 
 
 typedef long long ll;
@@ -65,19 +60,44 @@ void print_vector(vi &v) {
 	cout << " }" << endl;
 }
 
-void print_set(sll &s) {
-
-	cout << "{ " ;
-
-	fauto(i, s) cout << i << ", ";
-
-	cout << " } " << endl;
-}
-
-
 
 void solve() {
 
+	int n;
+	cin >> n;
+
+	string s;
+	cin >> s;
+
+	if (n == 1) {
+		cout << s << endl;
+		return;
+	}
+
+	if (n == 2) {
+		cout << s << endl;
+		return;
+	}
+
+	for (int i = 1; i < n; i += 2) {
+
+		if (i == n - 2) {
+			cout << s[i - 1] << "" << s[i] << "" << s[i + 1] << endl;
+			return;
+		} else if (i == n - 1) {
+			cout << s[i - 1] << "" << s[i] << endl;
+			return;
+		}
+
+
+		if (s[i + 2] == 'a' || s[i + 2] == 'e') {
+
+			cout << s[i - 1] << "" << s[i] << ".";
+		} else if (i + 3 < n && s[i + 3] == 'a' || s[i + 3] == 'e') {
+			cout << s[i - 1] << "" << s[i] << "" << s[i + 1] << ".";
+			i++;
+		}
+	}
 
 }
 
