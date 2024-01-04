@@ -45,8 +45,6 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-ll dp[1002][1002];
-
 void print_map(mii &map) {
 
 	cout << "{ ";
@@ -80,62 +78,32 @@ void print_set(sll &s) {
 
 void solve() {
 
-	int n, m;
-	cin >> n >> m;
+	int n;
+	cin >> n;
 
-	vector<pair<int, ll>> adj[n];
+	vl v;
 
-	REP(i, 0, m - 1) {
+	usll set;
 
-		int u, v;
-		ll w;
-		cin >> u >> v >> w;
+	REP(i, 0, n - 1) {
 
-		u--;
-		v--;
-		adj[u].PB(MP(v, w));
-		adj[v].PB(MP(u, w));
-
-	}
-
-	vl s(n);
-
-	REP(i, 0, n - 1) cin >> s[i];
-
-	priority_queue<pair<ll, pair<int, ll>>, vector<pair<ll, pair<int, ll>>>, greater<pair<ll, pair<int, ll>>>> pq;
-
-	vl dis(n * 1000 + 5, 1e18);
-
-	dis[0 * 1000 + s[0]] = 0;
-
-	pq.push({0, {0, s[0]}});
-
-	while (!pq.empty()) {
-
-		auto par = pq.top();
-		pq.pop();
-
-		fauto(i, adj[par.S.F]) {
-
-			if (dis[i.F * 1000 + par.S.S] > par.F + i.S * par.S.S) {
-
-				dis[i.F * 1000 + par.S.S] = par.F + i.S * par.S.S;
-
-				pq.push({dis[i.F * 1000 + par.S.S], {i.F, min(par.S.S, s[i.F])}});
-			}
+		ll val;
+		cin >> val;
+		if (!set.count(val)) {
+			v.PB(val);
+			set.insert(val);
 		}
+
 	}
 
+	sort(all(v));
 
-	ll mini = LLONG_MAX;
+	n = v.size();
+	ll a1 = abs(v[0] - v[n - 1]) + abs(v[n - 2] - v[n - 1]);
+	ll a2 = abs(v[n - 1] - v[n - 2]) + abs(v[0] - v[n - 2]);
+	ll a3 = abs(v[n - 1] - v[0]) + abs(v[n - 2] - v[0]);
 
-	REP(i, ((n - 1) * 1000 + 1), (n * 1000))  mini = min(mini, dis[i]);
-
-	cout << mini << endl;
-	// cout << dis[4001] << endl;
-
-
-
+	cout << max(a1, max(a2, a3)) << endl;
 }
 
 int main() {
@@ -153,7 +121,7 @@ int main() {
 	cin >> t;
 
 	while (t--) {
-		memset(dp, -1, sizeof(dp));
+
 		solve();
 	}
 

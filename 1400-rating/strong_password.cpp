@@ -9,10 +9,10 @@ using namespace std;
 #define S second
 #define PB push_back
 #define MP make_pair
-#define REP(i, a, b) for(int i=a;i<=b;i++)
+#define REP(i, a, b) for(int i=(a);i<=(b);i++)
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
-#define REPD(i,a,b) for(int i=a;i>=b;i--)
+#define REPD(i,a,b) for(int i=(a);i>=(b);i--)
 // #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
 
 
@@ -44,8 +44,6 @@ typedef priority_queue<int> pqi;
 typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
-
-ll dp[1002][1002];
 
 void print_map(mii &map) {
 
@@ -80,61 +78,53 @@ void print_set(sll &s) {
 
 void solve() {
 
-	int n, m;
-	cin >> n >> m;
+	string s;
+	cin >> s;
+	int m;
+	cin >> m;
+	string l;
+	string r;
 
-	vector<pair<int, ll>> adj[n];
+	cin >> l >> r;
+
+	int n = s.size();
+
+	vvi ind(10, vi());
+
+	REP(i, 0, n - 1) {
+
+		ind[s[i] - '0'].PB(i);
+	}
+
+	// fauto(i, ind) {
+
+	// 	fauto(j, i) cout << j << " ";
+
+	// 	cout << endl;
+	// }
+
+	int pre = -1;
 
 	REP(i, 0, m - 1) {
 
-		int u, v;
-		ll w;
-		cin >> u >> v >> w;
+		int maxi = -1;
+		REP(j, l[i] - '0', r[i] - '0') {
 
-		u--;
-		v--;
-		adj[u].PB(MP(v, w));
-		adj[v].PB(MP(u, w));
+			int in = upper_bound(all(ind[j]), pre) - ind[j].begin();
 
-	}
-
-	vl s(n);
-
-	REP(i, 0, n - 1) cin >> s[i];
-
-	priority_queue<pair<ll, pair<int, ll>>, vector<pair<ll, pair<int, ll>>>, greater<pair<ll, pair<int, ll>>>> pq;
-
-	vl dis(n * 1000 + 5, 1e18);
-
-	dis[0 * 1000 + s[0]] = 0;
-
-	pq.push({0, {0, s[0]}});
-
-	while (!pq.empty()) {
-
-		auto par = pq.top();
-		pq.pop();
-
-		fauto(i, adj[par.S.F]) {
-
-			if (dis[i.F * 1000 + par.S.S] > par.F + i.S * par.S.S) {
-
-				dis[i.F * 1000 + par.S.S] = par.F + i.S * par.S.S;
-
-				pq.push({dis[i.F * 1000 + par.S.S], {i.F, min(par.S.S, s[i.F])}});
+			if (in == ind[j].size()) {
+				cout << "YES" << endl;
+				return;
 			}
+
+			maxi = max(maxi, ind[j][in]);
+
 		}
+
+		pre = maxi;
 	}
 
-
-	ll mini = LLONG_MAX;
-
-	REP(i, ((n - 1) * 1000 + 1), (n * 1000))  mini = min(mini, dis[i]);
-
-	cout << mini << endl;
-	// cout << dis[4001] << endl;
-
-
+	cout << "NO" << endl;
 
 }
 
@@ -153,7 +143,7 @@ int main() {
 	cin >> t;
 
 	while (t--) {
-		memset(dp, -1, sizeof(dp));
+
 		solve();
 	}
 

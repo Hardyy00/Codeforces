@@ -45,8 +45,6 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-ll dp[1002][1002];
-
 void print_map(mii &map) {
 
 	cout << "{ ";
@@ -80,60 +78,119 @@ void print_set(sll &s) {
 
 void solve() {
 
-	int n, m;
-	cin >> n >> m;
+	int m, s;
+	cin >> m >> s;
 
-	vector<pair<int, ll>> adj[n];
+	if (s == 0) {
 
-	REP(i, 0, m - 1) {
-
-		int u, v;
-		ll w;
-		cin >> u >> v >> w;
-
-		u--;
-		v--;
-		adj[u].PB(MP(v, w));
-		adj[v].PB(MP(u, w));
-
-	}
-
-	vl s(n);
-
-	REP(i, 0, n - 1) cin >> s[i];
-
-	priority_queue<pair<ll, pair<int, ll>>, vector<pair<ll, pair<int, ll>>>, greater<pair<ll, pair<int, ll>>>> pq;
-
-	vl dis(n * 1000 + 5, 1e18);
-
-	dis[0 * 1000 + s[0]] = 0;
-
-	pq.push({0, {0, s[0]}});
-
-	while (!pq.empty()) {
-
-		auto par = pq.top();
-		pq.pop();
-
-		fauto(i, adj[par.S.F]) {
-
-			if (dis[i.F * 1000 + par.S.S] > par.F + i.S * par.S.S) {
-
-				dis[i.F * 1000 + par.S.S] = par.F + i.S * par.S.S;
-
-				pq.push({dis[i.F * 1000 + par.S.S], {i.F, min(par.S.S, s[i.F])}});
-			}
+		if (m == 1) {
+			cout << 0 << " " << 0 << endl;
+		} else {
+			cout << -1 << " " << -1 << endl;
 		}
+		return;
+
+	}
+
+	if (s > (9 * m) ) {
+		cout << -1 << " " << -1 << endl;
+		return;
+	}
+
+	if (s < m) {
+
+		vi ans(m, 0);
+		int sum = 1;
+		ans[0] = 1;
+		int j = m - 1;
+
+		while (j >= 0 && sum < s) {
+
+			if (ans[j] == 9) {
+				j--;
+				continue;
+			}
+
+			ans[j]++;
+			sum++;
+		}
+
+		fauto(i, ans) cout << i;
+
+		cout << " ";
+
+		vi b(m, 0);
+		int i = 0;
+		sum = 0;
+		while (i < m && sum < s) {
+
+			if (b[i] == 9) {
+				i++;
+				continue;
+			}
+
+			b[i]++;
+			sum++;
+		}
+
+		fauto(i, b) cout << i;
+		cout << endl;
+
+		return;
 	}
 
 
-	ll mini = LLONG_MAX;
+	vi ans(m, s / m);
 
-	REP(i, ((n - 1) * 1000 + 1), (n * 1000))  mini = min(mini, dis[i]);
 
-	cout << mini << endl;
-	// cout << dis[4001] << endl;
+	REPD(i, m - 1, (m - (s % m))) ans[i]++;
 
+	int i = 0;
+	int j = m - 1;
+	while (i < j) {
+
+
+		if (i == 0 && ans[i] == 1) {
+			i++;
+			continue;
+		} else if (i > 0 && ans[i] == 0) {
+			i++;
+			continue;
+		}
+
+		if (ans[j] == 9) {
+			j--;
+			continue;
+		}
+
+		ans[i]--;
+		ans[j]++;
+
+	}
+
+
+	fauto(i, ans) {
+		cout << i ;
+	}
+
+	cout << " ";
+
+	vi b(m, 0);
+	i = 0;
+	int sum = 0;
+	while (i < m && sum < s) {
+
+		if (b[i] == 9) {
+			i++;
+			continue;
+		}
+
+		b[i]++;
+		sum++;
+	}
+
+	fauto(i, b) cout << i;
+	cout << endl;
 
 
 }
@@ -149,13 +206,10 @@ int main() {
 	cin.tie(0);
 	cout.tie(0);
 
-	int t;
-	cin >> t;
 
-	while (t--) {
-		memset(dp, -1, sizeof(dp));
-		solve();
-	}
+
+	solve();
+
 
 
 
