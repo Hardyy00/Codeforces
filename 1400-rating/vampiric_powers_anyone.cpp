@@ -14,7 +14,7 @@ using namespace std;
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
 // #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-// #define ordered_multiset tree<ll, null_type,less_equal<ll>, rb_tree_tag,tree_order_statistics_node_update>
+
 
 
 typedef long long ll;
@@ -89,7 +89,7 @@ public:
 		return links[bit] != nullptr;
 	}
 
-	void put(int bit , Node* &node) {
+	void put(int bit , Node* node) {
 		links[bit] = node;
 	}
 
@@ -125,15 +125,19 @@ public:
 
 			if (curr->containsKey(bit) == false) {
 
-				Node* nn = new Node();
-				curr->put(bit, nn);
+
+				curr->put(bit, new Node());
 			}
 
 			curr = curr->get(bit);
 		}
 
 		curr->setEnd();
+
+		delete curr;
 	}
+
+
 
 	int maxXor(int num) {
 
@@ -155,7 +159,11 @@ public:
 			}
 		}
 
+
+		delete curr;
 		return ans;
+
+
 	}
 };
 
@@ -163,7 +171,31 @@ public:
 
 void solve() {
 
+	int n;
+	cin >> n;
 
+	vi v(n);
+
+	REP(i, 0, n - 1) {
+		cin >> v[i];
+	}
+
+	int maxi = v[0];
+	int running = v[0];
+
+	Trie trie;
+	trie.insert(running);
+
+	REP(i, 1, n - 1) {
+
+		running ^= v[i];
+		maxi = max(maxi, running);
+
+		trie.insert(running);
+		maxi = max(maxi, trie.maxXor(running));
+	}
+
+	cout << maxi << endl;
 }
 
 int main() {

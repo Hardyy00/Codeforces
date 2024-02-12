@@ -14,7 +14,7 @@ using namespace std;
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
 // #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-// #define ordered_multiset tree<ll, null_type,less_equal<ll>, rb_tree_tag,tree_order_statistics_node_update>
+
 
 
 typedef long long ll;
@@ -74,96 +74,86 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
-class Node {
-
-private:
-	Node* links[2];
-	bool end;
-public:
-	Node() {
-
-		end = false;
-	}
-
-	bool containsKey(int bit) {
-		return links[bit] != nullptr;
-	}
-
-	void put(int bit , Node* &node) {
-		links[bit] = node;
-	}
-
-	Node* get(int bit) {
-		return links[bit];
-	}
-
-	bool isEnd() {
-		return end;
-	}
-
-	void setEnd() {
-		end = true;
-	}
-
-};
-
-class Trie {
-	Node* root;
-
-public:
-	Trie() {
-		root = new Node();
-	}
-	void insert(int num) {
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i) & 1;
-
-
-			if (curr->containsKey(bit) == false) {
-
-				Node* nn = new Node();
-				curr->put(bit, nn);
-			}
-
-			curr = curr->get(bit);
-		}
-
-		curr->setEnd();
-	}
-
-	int maxXor(int num) {
-
-		int ans = 0;
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i ) & 1;
-			int oppositeBit = 1 - bit;
-
-			if (curr->containsKey(oppositeBit)) {
-
-				ans = ans | (1 << i);
-				curr = curr->get(oppositeBit);
-			} else {
-				curr = curr->get(bit);
-			}
-		}
-
-		return ans;
-	}
-};
-
 
 
 void solve() {
 
+	int n;
+	cin >> n;
 
+	string a;
+	string b;
+
+	cin >> a >> b;
+	int cn = 0;
+
+	bool isEqual = true, isAlter = true;
+
+	for (int i = 0; i < n; i++) {
+
+		if (a[i] != b[i]) {
+
+			isEqual = false;
+		} else if (a[i] == b[i]) {
+			isAlter = false;
+		}
+
+		if (!isEqual && !isAlter) {
+
+			cout << "NO" << endl;
+			return;
+		}
+	}
+
+	cout << "YES" << endl;
+	vpii v;
+
+	REP(i, 0, n - 1) {
+
+		if (a[i] == '1') {
+
+			v.PB(MP(i + 1, i + 1));
+		}
+	}
+
+	bool allZero = true;
+
+	REP(i, 0, n - 1) {
+
+		if (b[i] == '1') {
+
+			if ((v.size() - (a[i] - '0')) % 2 == 0) {
+				allZero = false;
+				break;
+			}
+		} else if (b[i] == '0') {
+
+			if ((v.size() - (a[i] - '0')) % 2 != 0) {
+				allZero = false;
+				break;
+			}
+		}
+	}
+
+	if (allZero) {
+		cout << v.size() << endl;
+		fauto(i, v) {
+
+			cout << i.F << " " << i.S << endl;
+		}
+		return;
+	}
+
+	cout << v.size() + 3 << endl;
+
+	fauto(i, v) {
+
+		cout << i.F << " " << i.S << endl;
+	}
+
+	cout << 1 << " " << n << endl;
+	cout << 1 << " " << 1 << endl;
+	cout << 2 << " " << n << endl;
 }
 
 int main() {

@@ -14,7 +14,7 @@ using namespace std;
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
 // #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-// #define ordered_multiset tree<ll, null_type,less_equal<ll>, rb_tree_tag,tree_order_statistics_node_update>
+
 
 
 typedef long long ll;
@@ -163,7 +163,47 @@ public:
 
 void solve() {
 
+	int n;
+	cin >> n;
 
+	pqi pq;
+
+	mii mp;
+
+	REP(i, 0, n - 1) {
+		ll val;
+		cin >> val;
+		mp[val]++;
+	}
+
+
+	fauto(i, mp) {
+		pq.push(i.S);
+	}
+
+	int ans = n;
+	while (pq.size() >= 2) {
+
+		int a = pq.top();
+		pq.pop();
+
+		int b = pq.top();
+		pq.pop();
+
+		a--;
+		b--;
+		ans -= 2;
+
+		if (a) {
+			pq.push(a);
+		}
+
+		if (b) {
+			pq.push(b);
+		}
+	}
+
+	cout << ans << endl;
 }
 
 int main() {

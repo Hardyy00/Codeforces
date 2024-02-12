@@ -2,7 +2,7 @@
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
+using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +13,8 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-// #define ordered_multiset tree<ll, null_type,less_equal<ll>, rb_tree_tag,tree_order_statistics_node_update>
+#define ordered_set tree<ll, null_type,less_equal<ll>, rb_tree_tag,tree_order_statistics_node_update>
+
 
 
 typedef long long ll;
@@ -162,6 +162,28 @@ public:
 
 
 void solve() {
+
+	int n;
+	cin >> n ;
+
+	vl v(n);
+
+	REP(i, 0, n - 1) cin >> v[i];
+
+	ordered_set st;
+
+	st.insert(v[n - 1]);
+
+	ll cn = 0;
+
+	REPD(i, n - 2, 0) {
+
+		cn += st.order_of_key(v[i] + 1);
+		st.insert(v[i]);
+	}
+
+	cout << cn << endl;
+
 
 
 }

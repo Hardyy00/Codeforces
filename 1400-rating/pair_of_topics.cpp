@@ -2,7 +2,7 @@
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 
-// using namespace __gnu_pbds;
+using namespace __gnu_pbds;
 using namespace std;
 
 #define F first
@@ -13,8 +13,8 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-// #define ordered_multiset tree<ll, null_type,less_equal<ll>, rb_tree_tag,tree_order_statistics_node_update>
+#define ordered_set tree<long long, null_type,less<long long>, rb_tree_tag,tree_order_statistics_node_update>
+
 
 
 typedef long long ll;
@@ -56,7 +56,7 @@ void print_map(mii &map) {
 	cout << " }" << endl;
 }
 
-void print_vector(vi &v) {
+void print_vector(vl &v) {
 
 	cout << "{ ";
 
@@ -163,6 +163,37 @@ public:
 
 void solve() {
 
+	int n;
+	cin >> n;
+
+	vl v(n);
+
+	REP(i, 0, n - 1) {
+		cin >> v[i];
+	}
+
+	REP(i, 0, n - 1) {
+		ll val;
+		cin >> val;
+
+		v[i] -= val;
+	}
+
+
+	sort(all(v));
+
+	ll count = 0;
+
+	REP(i, 0, n - 1) {
+
+		int index = upper_bound(v.begin() + i + 1, v.end(), -v[i]) - v.begin();
+
+		count += n - index;
+	}
+
+	cout << count << endl;
+
+
 
 }
 
@@ -177,13 +208,10 @@ int main() {
 	cin.tie(0);
 	cout.tie(0);
 
-	int t;
-	cin >> t;
 
-	while (t--) {
 
-		solve();
-	}
+	solve();
+
 
 
 

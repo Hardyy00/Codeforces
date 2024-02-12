@@ -14,7 +14,7 @@ using namespace std;
 #define fauto(i,v) for(auto i : (v))
 #define REPD(i,a,b) for(int i=a;i>=b;i--)
 // #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-// #define ordered_multiset tree<ll, null_type,less_equal<ll>, rb_tree_tag,tree_order_statistics_node_update>
+
 
 
 typedef long long ll;
@@ -159,11 +159,38 @@ public:
 	}
 };
 
+int d(int n) {
 
+	for (int i = 2; i < n; i++) {
+
+		if (n % i) return i;
+	}
+
+	return n;
+}
 
 void solve() {
 
+	int n;
+	cin >> n;
 
+	int nonDiv = d(n);
+
+
+	string ans = "";
+
+	int i = 0;
+	while (i < n) {
+
+		for (int j = 1; j <= nonDiv && i < n; j++, i++) {
+
+			ans += (char)(96 + j);
+
+		}
+
+	}
+
+	cout << ans << endl;
 }
 
 int main() {

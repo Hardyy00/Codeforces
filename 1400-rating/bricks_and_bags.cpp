@@ -56,7 +56,7 @@ void print_map(mii &map) {
 	cout << " }" << endl;
 }
 
-void print_vector(vi &v) {
+void print_vector(vl &v) {
 
 	cout << "{ ";
 
@@ -83,28 +83,37 @@ void solve() {
 
 	vl v;
 
-	usll set;
-
 	REP(i, 0, n - 1) {
 
 		ll val;
 		cin >> val;
-		if (!set.count(val)) {
-			v.PB(val);
-			set.insert(val);
-		}
+
+		v.PB(val);
+
 
 	}
 
 	sort(all(v));
 
-	n = v.size();
-	ll a1 = abs(v[0] - v[n - 1]) + abs(v[n - 2] - v[n - 1]);
-	ll a2 = abs(v[n - 1] - v[n - 2]) + abs(v[0] - v[n - 2]);
-	ll a3 = abs(v[n - 1] - v[0]) + abs(v[n - 2] - v[0]);
 
-	cout << max(a1, max(a2, a3)) << endl;
+	ll s1 = 0;
+	ll s2 = 0;
+
+	for (int i = 0; i + 1 < n - 1; i++) {
+
+		s1 = max(s1, v[n - 1] - v[i] + v[i + 1] - v[i]);
+	}
+
+	for (int i = n - 1; i - 1 > 0; i--) {
+
+		s2 = max(s2, v[i] - v[0] + v[i] - v[i - 1]);
+
+	}
+
+	cout << max(s1, s2) << endl;
 }
+
+
 
 int main() {
 
