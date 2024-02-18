@@ -77,6 +77,45 @@ void print_set(sll &s) {
 
 void solve() {
 
+	ll a, b;
+	cin >> a >> b;
+
+	if (a % 2 && b % 2) {
+		cout << "No" << endl;
+		return;
+	}
+
+	bool f1 = true, f2 = true;
+
+	if (!(a % 2)) {
+
+		ll c = a / 2;
+		ll d = 2 * b;
+
+		if (d == a && c == b) {
+			f1 = false;
+		}
+	} else {
+		f1 = false;
+	}
+
+	if (!(b % 2)) {
+
+		ll c = 2 * a;
+		ll d = b / 2;
+
+		if (d == a && c == b) {
+			f2 = false;
+		}
+	} else {
+		f2 = false;
+	}
+
+	if (f1 || f2) {
+		cout << "Yes" << endl;
+	} else {
+		cout << "No" << endl;
+	}
 
 }
 

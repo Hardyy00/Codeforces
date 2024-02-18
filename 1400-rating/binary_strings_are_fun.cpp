@@ -43,7 +43,7 @@ typedef vector<pair<long long, long long>> vpll;
 typedef priority_queue<int> pqi;
 typedef priority_queue<pair<int, int>> pqpii;
 
-const ll MOD = 1e9 + 7;
+const ll MOD = 998244353;
 
 void print_map(mii &map) {
 
@@ -77,7 +77,28 @@ void print_set(sll &s) {
 
 void solve() {
 
+	int n;
+	cin >> n;
 
+	string s;
+	cin >> s;
+
+	int curr = 1;
+
+	ll ans = 1;
+
+	REP(i, 1, n - 1) {
+
+		if (s[i] == s[i - 1]) {
+			curr = (curr * 2) % MOD;
+		} else {
+			curr = 1;
+		}
+
+		ans = (ans + curr) % MOD;
+	}
+
+	cout << ans << endl;
 }
 
 int main() {

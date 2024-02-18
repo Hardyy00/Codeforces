@@ -45,7 +45,7 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
+void print_map(vpll &map) {
 
 	cout << "{ ";
 	fauto(i, map) {
@@ -74,10 +74,124 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
+class Node {
+
+private:
+	Node* links[2];
+	bool end;
+public:
+	Node() {
+
+		end = false;
+	}
+
+	bool containsKey(int bit) {
+		return links[bit] != nullptr;
+	}
+
+	void put(int bit , Node* &node) {
+		links[bit] = node;
+	}
+
+	Node* get(int bit) {
+		return links[bit];
+	}
+
+	bool isEnd() {
+		return end;
+	}
+
+	void setEnd() {
+		end = true;
+	}
+
+};
+
+class Trie {
+	Node* root;
+
+public:
+	Trie() {
+		root = new Node();
+	}
+	void insert(int num) {
+
+		Node* curr = root;
+
+		for (int i = 31; i >= 0; i--) {
+
+			int bit = (num >> i) & 1;
+
+
+			if (curr->containsKey(bit) == false) {
+
+				Node* nn = new Node();
+				curr->put(bit, nn);
+			}
+
+			curr = curr->get(bit);
+		}
+
+		curr->setEnd();
+	}
+
+	int maxXor(int num) {
+
+		int ans = 0;
+
+		Node* curr = root;
+
+		for (int i = 31; i >= 0; i--) {
+
+			int bit = (num >> i ) & 1;
+			int oppositeBit = 1 - bit;
+
+			if (curr->containsKey(oppositeBit)) {
+
+				ans = ans | (1 << i);
+				curr = curr->get(oppositeBit);
+			} else {
+				curr = curr->get(bit);
+			}
+		}
+
+		return ans;
+	}
+};
+
+
 
 void solve() {
 
 
+	ll n, x, y;
+	cin >> n >> x >> y;
+
+
+	vl v(n);
+	map<ll, map<ll, ll>> mp;
+
+	REP(i, 0, n - 1) {
+
+		cin >> v[i];
+		mp[v[i] % x][v[i] % y]++;
+
+	}
+
+	ll cn = 0;
+
+	REP(i, 0, n - 1) {
+
+		int val = (x - (v[i] % x)) % x;
+
+		cn += mp[val][v[i] % y];
+
+		if (val ==  (v[i] % x)) {
+			cn--;
+		}
+	}
+
+	cout << cn / 2 << endl;
 }
 
 int main() {

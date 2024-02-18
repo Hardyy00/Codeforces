@@ -56,7 +56,7 @@ void print_map(mii &map) {
 	cout << " }" << endl;
 }
 
-void print_vector(vi &v) {
+void print_vector(vl &v) {
 
 	cout << "{ ";
 
@@ -77,6 +77,34 @@ void print_set(sll &s) {
 
 void solve() {
 
+	ll n;
+	cin >> n;
+
+	si st;
+
+	REP(i, 0, n - 1) {
+		ll val;
+		cin >> val;
+
+		st.insert(val);
+	}
+
+	vl v;
+
+	fauto(i, st) {
+
+		v.PB(i);
+	}
+
+	ll maxi = 0;
+	REP(i, 0, v.size() - 1) {
+
+		ll in = upper_bound(v.begin() + i, v.end(), v[i] + n - 1) - v.begin();
+
+		maxi = max(maxi, in - i);
+	}
+
+	cout << maxi << endl;
 
 }
 

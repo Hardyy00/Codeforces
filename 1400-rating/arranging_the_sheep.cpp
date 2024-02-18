@@ -56,7 +56,7 @@ void print_map(mii &map) {
 	cout << " }" << endl;
 }
 
-void print_vector(vi &v) {
+void print_vector(vl &v) {
 
 	cout << "{ ";
 
@@ -74,9 +74,135 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
+class Node {
+
+private:
+	Node* links[2];
+	bool end;
+public:
+	Node() {
+
+		end = false;
+	}
+
+	bool containsKey(int bit) {
+		return links[bit] != nullptr;
+	}
+
+	void put(int bit , Node* &node) {
+		links[bit] = node;
+	}
+
+	Node* get(int bit) {
+		return links[bit];
+	}
+
+	bool isEnd() {
+		return end;
+	}
+
+	void setEnd() {
+		end = true;
+	}
+
+};
+
+class Trie {
+	Node* root;
+
+public:
+	Trie() {
+		root = new Node();
+	}
+	void insert(int num) {
+
+		Node* curr = root;
+
+		for (int i = 31; i >= 0; i--) {
+
+			int bit = (num >> i) & 1;
+
+
+			if (curr->containsKey(bit) == false) {
+
+				Node* nn = new Node();
+				curr->put(bit, nn);
+			}
+
+			curr = curr->get(bit);
+		}
+
+		curr->setEnd();
+	}
+
+	int maxXor(int num) {
+
+		int ans = 0;
+
+		Node* curr = root;
+
+		for (int i = 31; i >= 0; i--) {
+
+			int bit = (num >> i ) & 1;
+			int oppositeBit = 1 - bit;
+
+			if (curr->containsKey(oppositeBit)) {
+
+				ans = ans | (1 << i);
+				curr = curr->get(oppositeBit);
+			} else {
+				curr = curr->get(bit);
+			}
+		}
+
+		return ans;
+	}
+};
+
+
 
 void solve() {
 
+
+	int n;
+	cin >> n;
+
+	string s;
+	cin >> s;
+
+	vl pre(n);
+	vl suf(n);
+
+	int cn = s[0] == '*';
+
+	REP(i, 1, n - 1) {
+
+		if (s[i] == '*') {
+			cn++;
+			pre[i] = pre[i - 1];
+		} else {
+			pre[i] = pre[i - 1] + cn;
+		}
+	}
+	cn = s[n - 1] == '*';
+	REPD(i, n - 2, 0) {
+
+		if (s[i] == '*') {
+			cn++;
+			suf[i] = suf[i + 1];
+		} else {
+			suf[i] = suf[i + 1] + cn;
+		}
+	}
+
+	ll mini = min(pre[n - 1], suf[0]);
+
+	REP(i, 1, n - 1) {
+		mini = min(mini, pre[i - 1] + suf[i]);
+
+	}
+
+	cout << mini << endl;
 
 }
 
