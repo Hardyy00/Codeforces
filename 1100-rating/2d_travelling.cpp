@@ -74,140 +74,32 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
-class Node {
-
-private:
-	Node* links[2];
-	bool end;
-public:
-	Node() {
-
-		end = false;
-	}
-
-	bool containsKey(int bit) {
-		return links[bit] != nullptr;
-	}
-
-	void put(int bit , Node* &node) {
-		links[bit] = node;
-	}
-
-	Node* get(int bit) {
-		return links[bit];
-	}
-
-	bool isEnd() {
-		return end;
-	}
-
-	void setEnd() {
-		end = true;
-	}
-
-};
-
-class Trie {
-	Node* root;
-
-public:
-	Trie() {
-		root = new Node();
-	}
-	void insert(int num) {
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i) & 1;
-
-
-			if (curr->containsKey(bit) == false) {
-
-				Node* nn = new Node();
-				curr->put(bit, nn);
-			}
-
-			curr = curr->get(bit);
-		}
-
-		curr->setEnd();
-	}
-
-	int maxXor(int num) {
-
-		int ans = 0;
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i ) & 1;
-			int oppositeBit = 1 - bit;
-
-			if (curr->containsKey(oppositeBit)) {
-
-				ans = ans | (1 << i);
-				curr = curr->get(oppositeBit);
-			} else {
-				curr = curr->get(bit);
-			}
-		}
-
-		return ans;
-	}
-};
-
-
 
 void solve() {
 
-	ll n;
-	cin >> n;
+	ll n, k, s, e;
+	cin >> n >> k >> s >> e;
 
-	vl v(n);
+	vvll mat(n, vl(2));
 
 	REP(i, 0, n - 1) {
-		cin >> v[i];
+
+		cin >> mat[i][0] >> mat[i][1];
 	}
 
-	int c1 = 1, c2 = 1;
-	int p1 = 0, p2 = n - 1;
+	ll dis1 = abs(mat[s - 1][0] - mat[e - 1][0]) + abs(mat[s - 1][1] - mat[e - 1][1]);
 
-	REP(i, 1, n - 1) {
-		if (v[i] == v[i - 1]) {
-			c1++;
-			p1 = i;
-		} else {
-			break;
-		}
+	ll mini1 = LLONG_MAX / 2  - 1;
+	ll mini2 = LLONG_MAX / 2 - 1;
+
+	REP(i, 0, k - 1) {
+
+		mini1 = min(mini1, abs(mat[s - 1][0] - mat[i][0]) + abs(mat[s - 1][1] - mat[i][1]) );
+
+		mini2 = min(mini2, abs(mat[e - 1][0] - mat[i][0]) + abs(mat[e - 1][1] - mat[i][1]) );
 	}
 
-	REPD(i, n - 2, 0) {
-
-		if (v[i] == v[i + 1]) {
-
-			c2++;
-			p2 = i;
-		} else {
-			break;
-		}
-	}
-
-	if (v[0] != v[n - 1]) {
-		cout << n - max(c1, c2) << endl;
-
-	} else {
-
-		if (p2 <= p1) {
-			cout << 0 << endl;
-		} else {
-			cout << n - (c1 + c2) << endl;
-		}
-
-	}
-
+	cout << min(dis1, mini1 + mini2) << endl;
 }
 
 int main() {

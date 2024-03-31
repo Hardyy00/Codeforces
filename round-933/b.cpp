@@ -56,7 +56,7 @@ void print_map(mii &map) {
 	cout << " }" << endl;
 }
 
-void print_vector(vi &v) {
+void print_vector(vl &v) {
 
 	cout << "{ ";
 
@@ -74,139 +74,46 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
-class Node {
-
-private:
-	Node* links[2];
-	bool end;
-public:
-	Node() {
-
-		end = false;
-	}
-
-	bool containsKey(int bit) {
-		return links[bit] != nullptr;
-	}
-
-	void put(int bit , Node* &node) {
-		links[bit] = node;
-	}
-
-	Node* get(int bit) {
-		return links[bit];
-	}
-
-	bool isEnd() {
-		return end;
-	}
-
-	void setEnd() {
-		end = true;
-	}
-
-};
-
-class Trie {
-	Node* root;
-
-public:
-	Trie() {
-		root = new Node();
-	}
-	void insert(int num) {
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i) & 1;
-
-
-			if (curr->containsKey(bit) == false) {
-
-				Node* nn = new Node();
-				curr->put(bit, nn);
-			}
-
-			curr = curr->get(bit);
-		}
-
-		curr->setEnd();
-	}
-
-	int maxXor(int num) {
-
-		int ans = 0;
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i ) & 1;
-			int oppositeBit = 1 - bit;
-
-			if (curr->containsKey(oppositeBit)) {
-
-				ans = ans | (1 << i);
-				curr = curr->get(oppositeBit);
-			} else {
-				curr = curr->get(bit);
-			}
-		}
-
-		return ans;
-	}
-};
-
-
 
 void solve() {
 
-	ll n;
+	int n;
 	cin >> n;
 
 	vl v(n);
 
-	REP(i, 0, n - 1) {
+	for (int i = 0; i < n; i++) {
 		cin >> v[i];
 	}
 
-	int c1 = 1, c2 = 1;
-	int p1 = 0, p2 = n - 1;
+	for (int i = 0; i < n - 2; i++) {
 
-	REP(i, 1, n - 1) {
-		if (v[i] == v[i - 1]) {
-			c1++;
-			p1 = i;
-		} else {
-			break;
+		if (v[i] == 0) continue;
+		if (v[i] < 0) {
+			cout << "NO" << endl;
+			return;
+		}
+
+		if (v[i + 1] < 2 * v[i]) {
+			cout << "NO" << endl;
+			return;
+		}
+
+		v[i + 1] -= 2 * v[i];
+		v[i + 2] -= v[i];
+		v[i] = 0;
+
+	}
+
+	fauto(i, v) {
+
+		if (i != 0) {
+			cout << "NO" << endl;
+			return;
 		}
 	}
 
-	REPD(i, n - 2, 0) {
-
-		if (v[i] == v[i + 1]) {
-
-			c2++;
-			p2 = i;
-		} else {
-			break;
-		}
-	}
-
-	if (v[0] != v[n - 1]) {
-		cout << n - max(c1, c2) << endl;
-
-	} else {
-
-		if (p2 <= p1) {
-			cout << 0 << endl;
-		} else {
-			cout << n - (c1 + c2) << endl;
-		}
-
-	}
+	cout << "YES" << endl;
 
 }
 

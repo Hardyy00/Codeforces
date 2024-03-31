@@ -74,97 +74,11 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
-class Node {
-
-private:
-	Node* links[2];
-	bool end;
-public:
-	Node() {
-
-		end = false;
-	}
-
-	bool containsKey(int bit) {
-		return links[bit] != nullptr;
-	}
-
-	void put(int bit , Node* &node) {
-		links[bit] = node;
-	}
-
-	Node* get(int bit) {
-		return links[bit];
-	}
-
-	bool isEnd() {
-		return end;
-	}
-
-	void setEnd() {
-		end = true;
-	}
-
-};
-
-class Trie {
-	Node* root;
-
-public:
-	Trie() {
-		root = new Node();
-	}
-	void insert(int num) {
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i) & 1;
-
-
-			if (curr->containsKey(bit) == false) {
-
-				Node* nn = new Node();
-				curr->put(bit, nn);
-			}
-
-			curr = curr->get(bit);
-		}
-
-		curr->setEnd();
-	}
-
-	int maxXor(int num) {
-
-		int ans = 0;
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i ) & 1;
-			int oppositeBit = 1 - bit;
-
-			if (curr->containsKey(oppositeBit)) {
-
-				ans = ans | (1 << i);
-				curr = curr->get(oppositeBit);
-			} else {
-				curr = curr->get(bit);
-			}
-		}
-
-		return ans;
-	}
-};
-
-
 
 void solve() {
 
 	ll n;
-	cin >> n;
+	cin >> n ;
 
 	vl v(n);
 
@@ -172,41 +86,33 @@ void solve() {
 		cin >> v[i];
 	}
 
-	int c1 = 1, c2 = 1;
-	int p1 = 0, p2 = n - 1;
-
-	REP(i, 1, n - 1) {
-		if (v[i] == v[i - 1]) {
-			c1++;
-			p1 = i;
-		} else {
-			break;
-		}
+	if (n == 1) {
+		cout << 0 << endl;
+		return;
 	}
 
-	REPD(i, n - 2, 0) {
 
-		if (v[i] == v[i + 1]) {
+	if (n <= 3) {
 
-			c2++;
-			p2 = i;
-		} else {
-			break;
-		}
+		cout << abs(v[n - 1] - v[0]) << endl;
+		return;
 	}
 
-	if (v[0] != v[n - 1]) {
-		cout << n - max(c1, c2) << endl;
+	ll g = __gcd(abs(v[0] - v[n - 1]), abs(v[1] - v[n - 2]));
 
-	} else {
+	int i = 2, j = n - 3;
+	while (i <= j) {
 
-		if (p2 <= p1) {
-			cout << 0 << endl;
-		} else {
-			cout << n - (c1 + c2) << endl;
-		}
 
+		g = __gcd(g, abs(v[i] - v[j]));
+
+
+		i++;
+		j--;
 	}
+
+	cout << g << endl;
+
 
 }
 

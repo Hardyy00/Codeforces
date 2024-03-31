@@ -56,7 +56,7 @@ void print_map(mii &map) {
 	cout << " }" << endl;
 }
 
-void print_vector(vi &v) {
+void print_vector(vl &v) {
 
 	cout << "{ ";
 
@@ -74,93 +74,37 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
-class Node {
+int bs(ll l, ll u, vl &v, vl &pre, vl &s) {
 
-private:
-	Node* links[2];
-	bool end;
-public:
-	Node() {
+	ll ans = 0;
+	ll save = l;
 
-		end = false;
-	}
+	ll low = l - 1;
+	ll high = pre.size() - 2;
 
-	bool containsKey(int bit) {
-		return links[bit] != nullptr;
-	}
+	ll rm = low - 1 > -1 ? (u * 1ll * s[low - 1]) - pre[low - 1] + s[low - 1] : 0;
+	cout << rm << endl;
+	while (low <= high) {
 
-	void put(int bit , Node* &node) {
-		links[bit] = node;
-	}
+		ll mid = (low + high) >> 1;
 
-	Node* get(int bit) {
-		return links[bit];
-	}
-
-	bool isEnd() {
-		return end;
-	}
-
-	void setEnd() {
-		end = true;
-	}
-
-};
-
-class Trie {
-	Node* root;
-
-public:
-	Trie() {
-		root = new Node();
-	}
-	void insert(int num) {
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i) & 1;
+		ll a = (u * 1ll * s[mid]) - pre[mid] + s[mid]  - rm;
+		ll b = (u * 1ll * s[mid + 1]) - pre[mid + 1] + s[mid + 1] - rm;
 
 
-			if (curr->containsKey(bit) == false) {
-
-				Node* nn = new Node();
-				curr->put(bit, nn);
-			}
-
-			curr = curr->get(bit);
+		cout << mid << " " << ((u * 1ll * s[mid]) - pre[mid] + s[mid]) << " " << a << " " << b << endl;
+		if (a < b ) {
+			ans = mid + 1;
+			low = mid + 1;
+		} else {
+			high = mid - 1;
 		}
-
-		curr->setEnd();
 	}
 
-	int maxXor(int num) {
-
-		int ans = 0;
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i ) & 1;
-			int oppositeBit = 1 - bit;
-
-			if (curr->containsKey(oppositeBit)) {
-
-				ans = ans | (1 << i);
-				curr = curr->get(oppositeBit);
-			} else {
-				curr = curr->get(bit);
-			}
-		}
-
-		return ans;
-	}
-};
+	return ans + 1;
 
 
-
+}
 void solve() {
 
 	ll n;
@@ -168,46 +112,38 @@ void solve() {
 
 	vl v(n);
 
-	REP(i, 0, n - 1) {
+	for (int i = 0; i < n; i++) {
 		cin >> v[i];
 	}
 
-	int c1 = 1, c2 = 1;
-	int p1 = 0, p2 = n - 1;
+	vl s(n);
+	vl pre(n);
 
-	REP(i, 1, n - 1) {
-		if (v[i] == v[i - 1]) {
-			c1++;
-			p1 = i;
-		} else {
-			break;
-		}
+	pre[0] = (v[0] * 1ll * (v[0] + 1)) / 2;
+	s[0] = v[0];
+
+	for (int i = 1; i < n; i++) {
+
+		s[i] = s[i - 1] + v[i];
+		pre[i] = (s[i] * 1ll * (s[i] + 1)) / 2;
 	}
 
-	REPD(i, n - 2, 0) {
+	ll q;
+	cin >> q;
 
-		if (v[i] == v[i + 1]) {
+	print_vector(pre);
+	print_vector(s);
 
-			c2++;
-			p2 = i;
-		} else {
-			break;
-		}
+
+	while (q-- > 0) {
+		ll l, u;
+		cin >> l >> u;
+
+
+		cout << bs(l, u, v, pre, s) <<  " ";
 	}
 
-	if (v[0] != v[n - 1]) {
-		cout << n - max(c1, c2) << endl;
-
-	} else {
-
-		if (p2 <= p1) {
-			cout << 0 << endl;
-		} else {
-			cout << n - (c1 + c2) << endl;
-		}
-
-	}
-
+	cout << endl;
 }
 
 int main() {

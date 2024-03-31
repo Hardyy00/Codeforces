@@ -74,139 +74,58 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
-class Node {
-
-private:
-	Node* links[2];
-	bool end;
-public:
-	Node() {
-
-		end = false;
-	}
-
-	bool containsKey(int bit) {
-		return links[bit] != nullptr;
-	}
-
-	void put(int bit , Node* &node) {
-		links[bit] = node;
-	}
-
-	Node* get(int bit) {
-		return links[bit];
-	}
-
-	bool isEnd() {
-		return end;
-	}
-
-	void setEnd() {
-		end = true;
-	}
-
-};
-
-class Trie {
-	Node* root;
-
-public:
-	Trie() {
-		root = new Node();
-	}
-	void insert(int num) {
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i) & 1;
-
-
-			if (curr->containsKey(bit) == false) {
-
-				Node* nn = new Node();
-				curr->put(bit, nn);
-			}
-
-			curr = curr->get(bit);
-		}
-
-		curr->setEnd();
-	}
-
-	int maxXor(int num) {
-
-		int ans = 0;
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i ) & 1;
-			int oppositeBit = 1 - bit;
-
-			if (curr->containsKey(oppositeBit)) {
-
-				ans = ans | (1 << i);
-				curr = curr->get(oppositeBit);
-			} else {
-				curr = curr->get(bit);
-			}
-		}
-
-		return ans;
-	}
-};
-
-
 
 void solve() {
 
-	ll n;
-	cin >> n;
+	ll n, m, x;
+	cin >> n >> m >> x;
 
-	vl v(n);
+	queue<ll> q;
 
-	REP(i, 0, n - 1) {
-		cin >> v[i];
-	}
+	q.push(x);
 
-	int c1 = 1, c2 = 1;
-	int p1 = 0, p2 = n - 1;
 
-	REP(i, 1, n - 1) {
-		if (v[i] == v[i - 1]) {
-			c1++;
-			p1 = i;
-		} else {
-			break;
+	sll st;
+
+	while (m--) {
+
+		ll si;
+		char ch;
+		cin >> si >> ch;
+		sll temp;
+
+		REPD(i, q.size() - 1, 0) {
+
+			ll pos = q.front();
+			q.pop();
+
+
+			if (ch == '?') {
+				temp.insert((si + pos) % n == 0 ? n : (si + pos) % n);
+				temp.insert((n + pos - si) % n == 0 ? n : (n + pos - si) % n);
+
+			} else if (ch == '0') {
+				temp.insert((si + pos) % n == 0 ? n : (si + pos) % n);
+
+			} else {
+				temp.insert((n + pos - si) % n == 0 ? n : (n + pos - si) % n);
+			}
+
+		}
+
+		fauto(i, temp) {
+			q.push(i);
 		}
 	}
 
-	REPD(i, n - 2, 0) {
+	cout << q.size() << endl;
 
-		if (v[i] == v[i + 1]) {
-
-			c2++;
-			p2 = i;
-		} else {
-			break;
-		}
+	while (!q.empty()) {
+		cout << q.front() <<  " ";
+		q.pop();
 	}
 
-	if (v[0] != v[n - 1]) {
-		cout << n - max(c1, c2) << endl;
-
-	} else {
-
-		if (p2 <= p1) {
-			cout << 0 << endl;
-		} else {
-			cout << n - (c1 + c2) << endl;
-		}
-
-	}
+	cout << endl;
 
 }
 

@@ -45,7 +45,7 @@ typedef priority_queue<pair<int, int>> pqpii;
 
 const ll MOD = 1e9 + 7;
 
-void print_map(mii &map) {
+void print_map(vpll &map) {
 
 	cout << "{ ";
 	fauto(i, map) {
@@ -56,7 +56,7 @@ void print_map(mii &map) {
 	cout << " }" << endl;
 }
 
-void print_vector(vi &v) {
+void print_vector(vl &v) {
 
 	cout << "{ ";
 
@@ -74,139 +74,64 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
-class Node {
-
-private:
-	Node* links[2];
-	bool end;
-public:
-	Node() {
-
-		end = false;
-	}
-
-	bool containsKey(int bit) {
-		return links[bit] != nullptr;
-	}
-
-	void put(int bit , Node* &node) {
-		links[bit] = node;
-	}
-
-	Node* get(int bit) {
-		return links[bit];
-	}
-
-	bool isEnd() {
-		return end;
-	}
-
-	void setEnd() {
-		end = true;
-	}
-
-};
-
-class Trie {
-	Node* root;
-
-public:
-	Trie() {
-		root = new Node();
-	}
-	void insert(int num) {
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i) & 1;
-
-
-			if (curr->containsKey(bit) == false) {
-
-				Node* nn = new Node();
-				curr->put(bit, nn);
-			}
-
-			curr = curr->get(bit);
-		}
-
-		curr->setEnd();
-	}
-
-	int maxXor(int num) {
-
-		int ans = 0;
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i ) & 1;
-			int oppositeBit = 1 - bit;
-
-			if (curr->containsKey(oppositeBit)) {
-
-				ans = ans | (1 << i);
-				curr = curr->get(oppositeBit);
-			} else {
-				curr = curr->get(bit);
-			}
-		}
-
-		return ans;
-	}
-};
-
-
 
 void solve() {
 
-	ll n;
+	int n;
 	cin >> n;
 
-	vl v(n);
+	vpll v(n);
 
 	REP(i, 0, n - 1) {
-		cin >> v[i];
+
+		ll val;
+		cin >> val;
+		v[i] = MP(val, i);
 	}
 
-	int c1 = 1, c2 = 1;
-	int p1 = 0, p2 = n - 1;
+	sort(all(v), greater<pll>());
 
-	REP(i, 1, n - 1) {
-		if (v[i] == v[i - 1]) {
-			c1++;
-			p1 = i;
-		} else {
-			break;
-		}
-	}
+	vl suff(n);
+
+	suff[n - 1] = v[n - 1].F;
 
 	REPD(i, n - 2, 0) {
+		suff[i] = suff[i + 1] + v[i].F;
+	}
 
-		if (v[i] == v[i + 1]) {
+	vl cont(n, 0);
 
-			c2++;
-			p2 = i;
+	ll counter = 0;
+
+	REP(i, 0, n - 2) {
+
+		cont[i] = counter;
+
+		if (v[i].F <= suff[i + 1]) {
+			counter++;
 		} else {
-			break;
+			counter = 0;
 		}
 	}
 
-	if (v[0] != v[n - 1]) {
-		cout << n - max(c1, c2) << endl;
+	cont[n - 1] = counter;
 
-	} else {
+	vl ans(n);
 
-		if (p2 <= p1) {
-			cout << 0 << endl;
-		} else {
-			cout << n - (c1 + c2) << endl;
-		}
+	for (int i = 0; i < n; i++) {
+
+		ll count = n - i - 1 + cont[i];
+
+		ans[v[i].S] = count;
 
 	}
+
+	fauto(i, ans) {
+		cout << i << " ";
+	}
+
+	cout << endl;
+
 
 }
 

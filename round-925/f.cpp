@@ -74,139 +74,82 @@ void print_set(sll &s) {
 	cout << " } " << endl;
 }
 
-class Node {
-
-private:
-	Node* links[2];
-	bool end;
-public:
-	Node() {
-
-		end = false;
-	}
-
-	bool containsKey(int bit) {
-		return links[bit] != nullptr;
-	}
-
-	void put(int bit , Node* &node) {
-		links[bit] = node;
-	}
-
-	Node* get(int bit) {
-		return links[bit];
-	}
-
-	bool isEnd() {
-		return end;
-	}
-
-	void setEnd() {
-		end = true;
-	}
-
-};
-
-class Trie {
-	Node* root;
-
-public:
-	Trie() {
-		root = new Node();
-	}
-	void insert(int num) {
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i) & 1;
-
-
-			if (curr->containsKey(bit) == false) {
-
-				Node* nn = new Node();
-				curr->put(bit, nn);
-			}
-
-			curr = curr->get(bit);
-		}
-
-		curr->setEnd();
-	}
-
-	int maxXor(int num) {
-
-		int ans = 0;
-
-		Node* curr = root;
-
-		for (int i = 31; i >= 0; i--) {
-
-			int bit = (num >> i ) & 1;
-			int oppositeBit = 1 - bit;
-
-			if (curr->containsKey(oppositeBit)) {
-
-				ans = ans | (1 << i);
-				curr = curr->get(oppositeBit);
-			} else {
-				curr = curr->get(bit);
-			}
-		}
-
-		return ans;
-	}
-};
-
-
 
 void solve() {
 
-	ll n;
-	cin >> n;
+	int n, m;
+	cin >> n >> m;
 
-	vl v(n);
+	vector<sll> adj(n + 1, sll());
 
-	REP(i, 0, n - 1) {
-		cin >> v[i];
-	}
+	vvll mat(m, vl(n));
 
-	int c1 = 1, c2 = 1;
-	int p1 = 0, p2 = n - 1;
+	REP(i, 0, m - 1) {
 
-	REP(i, 1, n - 1) {
-		if (v[i] == v[i - 1]) {
-			c1++;
-			p1 = i;
-		} else {
-			break;
+		REP(j, 0, n - 1) {
+
+			cin >> mat[i][j];
 		}
 	}
 
-	REPD(i, n - 2, 0) {
+	if (n == 1 || n == 2) {
+		cout << "YES" << endl;
+		return;
+	}
 
-		if (v[i] == v[i + 1]) {
+	REP(i, 0, m - 1) {
 
-			c2++;
-			p2 = i;
-		} else {
-			break;
+		for (int j = 2; j < n; j++) {
+
+			adj[ mat[i][j - 1] ].insert( mat[i][j] );
 		}
 	}
 
-	if (v[0] != v[n - 1]) {
-		cout << n - max(c1, c2) << endl;
 
-	} else {
+	vi ind(n + 1, 0);
 
-		if (p2 <= p1) {
-			cout << 0 << endl;
-		} else {
-			cout << n - (c1 + c2) << endl;
+	REP(i, 1, n) {
+
+		for (auto it : adj[i]) {
+			ind[it]++;
 		}
-
 	}
+
+	queue<ll> q;
+	int cn = n ;
+
+	for (int i = 1; i <= n; i++) {
+
+		if (!ind[i]) {
+			q.push(i);
+			cn--;
+		}
+	}
+
+	if (q.empty()) {
+		cout << "NO" << endl;
+		return;
+	}
+
+
+	while (!q.empty()) {
+
+		ll node = q.front();
+		q.pop();
+
+		for (auto next : adj[node]) {
+
+			ind[next]--;
+
+			if (ind[next] == 0) {
+				q.push(next);
+				cn--;
+			}
+		}
+	}
+
+
+	cout << (!cn ? "YES" : "NO") << endl;
 
 }
 
